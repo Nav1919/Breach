@@ -188,6 +188,10 @@ export async function analyzeData(
         3. Potential commercialization opportunities
         4. Market needs not addressed by current solutions
         5. Innovation possibilities in this space
+        6. Sources used
+
+        In your response, include the research papers as a footnote citation. Provide the sources for papers used.
+
         `;
 
         const result = await model.generateContent(prompt);

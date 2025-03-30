@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
             industryCpcCodes = ['A', 'B', 'G']; // Default to broad categories
         }
         const searchQuery = keywords.join(" ") + " " + primaryIndustry;
-        const papers = await fetchArxivPapers(searchQuery, 5);
+        const papers = await fetchArxivPapers(searchQuery, 50);
         const bigQuery = new BigQuery({
             keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
         });

@@ -13,6 +13,9 @@ type Message = {
   role: "user" | "assistant"
 }
 
+// Create a server session ID that will change each time the server restarts
+const SERVER_SESSION_ID = Date.now().toString();
+
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -25,11 +28,24 @@ export default function ChatInterface() {
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  // Load messages from localStorage on component mount
+  // Load messages from localStorage on component mount, but only if server session matches
   useEffect(() => {
+    const savedSessionId = localStorage.getItem('chatSessionId');
     const savedMessages = localStorage.getItem('chatHistory');
-    if (savedMessages) {
-      setMessages(JSON.parse(savedMessages));
+    
+    // Only restore messages if the session ID matches (same server instance)
+    if (savedSessionId === SERVER_SESSION_ID && savedMessages) {
+      try {
+        setMessages(JSON.parse(savedMessages));
+      } catch (e) {
+        console.error("Error parsing saved messages:", e);
+        // If there's an error, just use the default initial message
+      }
+    } else {
+      // New server session, save the new session ID
+      localStorage.setItem('chatSessionId', SERVER_SESSION_ID);
+      // Clear any existing chat history
+      localStorage.removeItem('chatHistory');
     }
   }, []);
 
