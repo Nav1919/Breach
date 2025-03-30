@@ -5,30 +5,30 @@ import { fetchArxivPapers } from '@/lib/arxiv'
 
 // Map of common industries to their CPC codes
 const industryToCpcMap: Record<string, string[]> = {
-  'healthcare': ['A61B', 'A61F', 'A61M'],
-  'transportation': ['B60', 'B61', 'B62'],
-  'agriculture': ['A01', 'A01B', 'C05'],
-  'energy': ['F03', 'H01M', 'Y02E'],
-  'manufacturing': ['B23', 'B29', 'G05B'],
-  'communications': ['H04L', 'H04W', 'G06F'],
-  'finance': ['G06Q', 'G07F', 'G07G'],
-  'ai': ['G06N'],
-  'robotics': ['B25J'],
-  'materials': ['C01', 'C08', 'D01'],
-  'electronics': ['H01L', 'H05K'],
-  'environmental': ['Y02W', 'B09B'],
-  'food': ['A23L', 'A23B'],
-  'construction': ['E04B', 'E04C'],
-  'textiles': ['D01', 'D02', 'D03'],
-  'pharmaceuticals': ['A61K', 'A61P'],
+    'healthcare': ['A61B', 'A61F', 'A61M'],
+    'transportation': ['B60', 'B61', 'B62'],
+    'agriculture': ['A01', 'A01B', 'C05'],
+    'energy': ['F03', 'H01M', 'Y02E'],
+    'manufacturing': ['B23', 'B29', 'G05B'],
+    'communications': ['H04L', 'H04W', 'G06F'],
+    'finance': ['G06Q', 'G07F', 'G07G'],
+    'ai': ['G06N'],
+    'robotics': ['B25J'],
+    'materials': ['C01', 'C08', 'D01'],
+    'electronics': ['H01L', 'H05K'],
+    'environmental': ['Y02W', 'B09B'],
+    'food': ['A23L', 'A23B'],
+    'construction': ['E04B', 'E04C'],
+    'textiles': ['D01', 'D02', 'D03'],
+    'pharmaceuticals': ['A61K', 'A61P'],
 };
 
 interface Patent {
-  id: string;
-  title: string;
-  abstract: string;
-  date: string;
-  cpc_codes: string[];
+    id: string;
+    title: string;
+    abstract: string;
+    date: string;
+    cpc_codes: string[];
 }
 
 export async function POST(request: NextRequest) {
@@ -83,7 +83,6 @@ export async function POST(request: NextRequest) {
         }
         let textFilter = '';
         if (keywords.length > 0) {
-            // Sanitize query text to remove problematic characters
             const sanitizedQuery = keywords.join(" ").replace(/['"`\\]/g, " ").trim();
             
             if (sanitizedQuery) {
@@ -112,10 +111,7 @@ export async function POST(request: NextRequest) {
         `;
         let patents: Patent[] = [];
         try {
-            // Execute the query
             const [rows] = await bigQuery.query(sqlQuery);
-            
-            // Process the results
             patents = rows.map((row: any) => ({
                 id: row.publication_number,
                 title: row.title || '',
@@ -125,7 +121,6 @@ export async function POST(request: NextRequest) {
             }));
         } catch (error) {
             console.error('Error querying BigQuery:', error);
-            // Continue even without patents
         }
         const paperSummaries = papers.map((p: any) => 
             `${p.title} - ${p.summary?.substring(0, 200) || 'No summary available'}...`

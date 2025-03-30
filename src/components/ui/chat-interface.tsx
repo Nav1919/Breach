@@ -17,13 +17,28 @@ export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      content: "Hello! Tell me about your invention idea or the problem you're trying to solve, and I'll help you discover unique innovation opportunities!",
+      content: "Hello! Tell me about your startup idea or the problem you're trying to solve!",
       role: "assistant",
     },
   ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  // Load messages from localStorage on component mount
+  useEffect(() => {
+    const savedMessages = localStorage.getItem('chatHistory');
+    if (savedMessages) {
+      setMessages(JSON.parse(savedMessages));
+    }
+  }, []);
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    if (messages.length > 1) { // Don't save just the initial message
+      localStorage.setItem('chatHistory', JSON.stringify(messages));
+    }
+  }, [messages]);
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -115,12 +130,71 @@ export default function ChatInterface() {
           </Link>
           <h2 className="font-semibold text-lg text-white">Patent Black Hole</h2>
         </div>
-        <div className="text-sm text-gray-400">Model: * Think of Name *</div>
+        <div className="text-sm text-gray-400">Model: Incubate 1.0</div>
       </div>
 
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[#0a0e17]">
-        {/* [... message rendering code ...] */}
+        {messages.map((message, index) => (
+          <div
+            key={message.id}
+            className={cn("flex items-start gap-4 animate-in fade-in duration-200", {
+              "justify-end": message.role === "user",
+            })}
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            {message.role === "assistant" && (
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Bot className="h-5 w-5 text-primary" />
+              </div>
+            )}
+
+            <div
+              className={cn(
+                "rounded-lg px-5 py-3 max-w-[85%] break-words",
+                message.role === "user" ? "bg-blue-600 text-white" : "bg-[#1e2330] text-white",
+              )}
+            >
+              {message.role === "assistant" ? (
+                <div 
+                  className="text-base whitespace-pre-line"
+                  dangerouslySetInnerHTML={{ __html: formatText(message.content) }}
+                />
+              ) : (
+                <p className="text-base">{message.content}</p>
+              )}
+            </div>
+
+            {message.role === "user" && (
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
+                <User className="h-5 w-5 text-secondary" />
+              </div>
+            )}
+          </div>
+        ))}
+
+        {isLoading && (
+          <div className="flex items-start gap-4 animate-in fade-in duration-200">
+            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+              <Bot className="h-5 w-5 text-primary" />
+            </div>
+            <div className="rounded-lg px-5 py-3 bg-[#1e2330]">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-gray-400 animate-pulse" />
+                <div
+                  className="w-2.5 h-2.5 rounded-full bg-gray-400 animate-pulse"
+                  style={{ animationDelay: "300ms" }}
+                />
+                <div
+                  className="w-2.5 h-2.5 rounded-full bg-gray-400 animate-pulse"
+                  style={{ animationDelay: "600ms" }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Input Area */}

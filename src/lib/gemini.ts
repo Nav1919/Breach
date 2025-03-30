@@ -130,6 +130,8 @@ function generateOptimizedPrompt(context: string, analysis: PromptAnalysis): str
     - Show clear differentiation from existing solutions
     - Have potential for significant market impact
     - Can be implemented within reasonable timeframes
+
+    Include all resources that helped you form each idea, including the ArXiv papers and patents from the Google BigQuery calls. If it is an ArXiv paper, explicitly state that it is from ArXiv and state the paper name.
     `;
 }
 
