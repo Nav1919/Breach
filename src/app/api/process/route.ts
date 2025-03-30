@@ -33,7 +33,7 @@ interface Patent {
 
 export async function POST(request: NextRequest) {
     try {
-        const { userMessage } = await request.json();
+        const { userMessage, previousIdeas } = await request.json();
         
         if (!userMessage) {
             return NextResponse.json({ error: "No user message provided" }, { status: 400 });
@@ -132,8 +132,24 @@ export async function POST(request: NextRequest) {
         
         // Generate innovation ideas with more context
         const innovationIdeas = await generateInnovationIdeas(
-            userMessage + "\n\nRelevant research: " + paperSummaries.join("\n") + 
-            "\n\nRelevant patents: " + patentSummaries.join("\n")
+            userMessage,
+            papers.map((p: { title: string; summary?: string; authors?: string[]; published?: string; pdf_url?: string }) => ({
+                title: p.title,
+                abstract: p.summary || '',
+                authors: p.authors || [],
+                published: p.published || '',
+                pdf_url: p.pdf_url || ''
+            })),
+            patents.map(p => ({
+                title: p.title,
+                abstract: p.abstract,
+                inventors: [], // Add inventors if available in your data
+                filing_date: p.date,
+                patent_number: p.id,
+                claims: [], // Add claims if available in your data
+                cpc_codes: p.cpc_codes // Add CPC codes from BigQuery
+            })),
+            previousIdeas // Pass previous ideas to the function
         );
         return NextResponse.json({ 
             success: true, 

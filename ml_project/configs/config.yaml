@@ -1,0 +1,41 @@
+model:
+  name: "t5-base"
+  max_length: 512
+  target_max_length: 256
+  special_tokens:
+    - "<industry>"
+    - "</industry>"
+    - "<keywords>"
+    - "</keywords>"
+    - "<research>"
+    - "</research>"
+    - "<patent>"
+    - "</patent>"
+    - "<innovation>"
+    - "</innovation>"
+
+training:
+  num_train_epochs: 3
+  per_device_train_batch_size: 4
+  per_device_eval_batch_size: 4
+  warmup_steps: 500
+  weight_decay: 0.01
+  learning_rate: 2e-5
+  gradient_accumulation_steps: 4
+  max_grad_norm: 1.0
+  logging_steps: 100
+  save_strategy: "epoch"
+  evaluation_strategy: "epoch"
+  load_best_model_at_end: true
+  metric_for_best_model: "loss"
+  greater_is_better: false
+
+data:
+  train_file: "data/raw/input_data.json"
+  processed_data_dir: "data/processed"
+  max_research_papers: 5
+  validation_split: 0.1
+
+api:
+  gemini_model: "gemini-pro"
+  arxiv_max_results: 5 

@@ -1,0 +1,32 @@
+Renewable Energy
+"I want to build a startup in the energy space but I'm not sure which product to make. I want the product to focus on renewable energy and be scalable."
+
+Sustainable Packaging Innovation
+"I want radical innovation in sustainable packaging using nanomaterials. Focus on biodegradable materials for the food industry. Ensure ideas address scalability and regulatory constraints."
+
+AI-Based Mental Health Solutions
+"Develop disruptive ideas for AI-driven mental health platforms. Prioritize real-time emotional analysis, personalized therapy, and patient privacy. Target emerging markets."
+
+Wearable Health-Tech for Elderly
+"Provide incremental innovations for wearable technology specifically targeting elderly users. Focus on simplicity, reliability, and continuous health monitoring in mature markets."
+
+Urban Agriculture & Vertical Farming
+"Generate radical startup concepts around urban agriculture, especially vertical farming. Highlight unique tech integrations, resource efficiency, and space optimization."
+
+Digital Education in Remote Regions
+"Propose disruptive EdTech ideas to improve digital education accessibility in remote, under-resourced regions. Focus on low-cost solutions, offline usability, and scalability."
+
+Next-Gen Renewable Energy Storage
+"I’m looking for groundbreaking innovation ideas for renewable energy storage. Prioritize scalability, affordability, and high efficiency. Must address emerging market challenges."
+
+Hyper-Personalized Nutrition
+"Suggest radical ideas for personalized nutrition solutions leveraging AI. Target busy urban professionals seeking health optimization. Emphasize data privacy and ease of use."
+
+Smart City Waste Management
+"Create disruptive concepts for smart waste management systems in growing urban environments. Emphasize IoT, real-time analytics, and significant environmental impact."
+
+FinTech Solutions for the Underbanked
+"Provide incremental fintech innovations aimed at unbanked populations in developing countries. Prioritize financial inclusion, ease of adoption, and regulatory compliance."
+
+Space Tourism & Sustainability
+"Generate innovative startup ideas around sustainable space tourism. Focus on radical yet feasible technologies, passenger safety, and ecological responsibility."
