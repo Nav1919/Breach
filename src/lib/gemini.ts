@@ -27,14 +27,12 @@ function analyzeContext(context: string): PromptAnalysis {
         industryFocus.push(match[2].trim());
     }
 
-    // Extract constraints and requirements
     const constraintPatterns = /(constraint|requirement|focus|must|should|need):\s*([^,\n]+)/gi;
     const constraints = [];
     while ((match = constraintPatterns.exec(context)) !== null) {
         constraints.push(match[2].trim());
     }
 
-    // Analyze innovation level based on keywords
     const innovationKeywords = {
         incremental: ['improve', 'enhance', 'optimize', 'better'],
         radical: ['revolutionary', 'breakthrough', 'novel', 'innovative'],
@@ -42,7 +40,6 @@ function analyzeContext(context: string): PromptAnalysis {
     };
     const innovationLevel = determineInnovationLevel(tokens, innovationKeywords);
 
-    // Analyze market maturity
     const maturityKeywords = {
         emerging: ['new', 'emerging', 'upcoming', 'future'],
         growing: ['growing', 'expanding', 'developing', 'rising'],
@@ -136,19 +133,11 @@ function generateOptimizedPrompt(context: string, analysis: PromptAnalysis): str
 export async function generateInnovationIdeas(context: string): Promise<string[]> {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
-        // Analyze context using NLP
         const analysis = analyzeContext(context);
-        
-        // Generate optimized prompt
         const optimizedPrompt = generateOptimizedPrompt(context, analysis);
-
-        // Generate content with optimized prompt
         const result = await model.generateContent(optimizedPrompt);
         const response = await result.response;
         const text = response.text();
-
-        // Split and clean the response
         return text.split("\n\n")
             .filter((idea: string) => idea.trim().length > 0)
             .map(idea => idea.trim());
@@ -186,13 +175,6 @@ export async function analyzeData(
         3. Potential commercialization opportunities
         4. Market needs not addressed by current solutions
         5. Innovation possibilities in this space
-<<<<<<< HEAD
-        6. Sources used
-
-        In your response, include all patents and research papers as a footnote citation. Provide the sources for papers used.
-
-=======
->>>>>>> 49b0b5c184234cc016b8aa2d8a1c95bff51d7c05
         `;
 
         const result = await model.generateContent(prompt);

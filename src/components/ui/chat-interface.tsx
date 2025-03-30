@@ -25,7 +25,6 @@ export default function ChatInterface() {
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  // Auto-scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
@@ -33,7 +32,6 @@ export default function ChatInterface() {
   const handleSend = async () => {
     if (input.trim() === "") return
 
-    // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       content: input,
@@ -42,8 +40,6 @@ export default function ChatInterface() {
 
     setMessages((prev) => [...prev, userMessage])
     setInput("")
-
-    // Call the process API
     setIsLoading(true)
     try {
       const response = await fetch('/api/process', {
@@ -60,7 +56,6 @@ export default function ChatInterface() {
       
       const data = await response.json();
       
-      // Format the content from the innovations array if available
       let content = "";
       if (data.innovations && Array.isArray(data.innovations)) {
         content = data.innovations.join("\n\n");
@@ -80,7 +75,6 @@ export default function ChatInterface() {
     } catch (error) {
       console.error('Error calling API:', error);
       
-      // Add error message
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: "I'm sorry, I couldn't process your request. Please try again with a different description.",
@@ -93,20 +87,14 @@ export default function ChatInterface() {
     }
   }
 
-  // Simple function to format text with basic formatting
   const formatText = (text: string) => {
-    // Replace **text** with bold
     const boldFormatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    
-    // Replace newlines with br tags
     const withLineBreaks = boldFormatted.replace(/\n/g, '<br/>');
-    
     return withLineBreaks;
   };
 
   return (
     <div className="flex flex-col w-full max-w-6xl mx-auto h-[90vh] border rounded-lg shadow-lg overflow-hidden bg-[#0a0e17]/90 backdrop-blur-md">
-      {/* Header with Back Button */}
       <div className="p-4 border-b border-[#1e2330] flex items-center justify-between bg-[#0a0e17]/95">
         <div className="flex items-center">
           <Link href="/" className="flex items-center text-sm font-medium text-gray-400 hover:text-white mr-6">
@@ -118,7 +106,6 @@ export default function ChatInterface() {
         <div className="text-sm text-gray-400">Model: Incubate 1.0</div>
       </div>
 
-      {/* Messages Container */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[#0a0e17]/80">
         {messages.map((message) => (
           <div
@@ -159,7 +146,6 @@ export default function ChatInterface() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Area */}
       <div className="p-5 border-t border-[#1e2330] bg-[#0a0e17]/95">
         <form
           onSubmit={(e) => {
@@ -176,7 +162,6 @@ export default function ChatInterface() {
             disabled={isLoading}
           />
           
-          {/* Directly use CSS for the button styles to ensure icon visibility */}
           <button
             type="submit"
             disabled={isLoading || input.trim() === ""}
