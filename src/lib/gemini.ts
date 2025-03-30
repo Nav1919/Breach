@@ -130,8 +130,6 @@ function generateOptimizedPrompt(context: string, analysis: PromptAnalysis): str
     - Show clear differentiation from existing solutions
     - Have potential for significant market impact
     - Can be implemented within reasonable timeframes
-
-    Include all resources that helped you form each idea, including the ArXiv papers and patents from the Google BigQuery calls. If it is an ArXiv paper, explicitly state that it is from ArXiv and state the paper name.
     `;
 }
 
@@ -188,10 +186,6 @@ export async function analyzeData(
         3. Potential commercialization opportunities
         4. Market needs not addressed by current solutions
         5. Innovation possibilities in this space
-        6. Sources used
-
-        In your response, include the research papers as a footnote citation. Provide the sources for papers used.
-
         `;
 
         const result = await model.generateContent(prompt);
