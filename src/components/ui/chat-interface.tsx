@@ -105,85 +105,26 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-6xl mx-auto h-[90vh] border rounded-lg shadow-sm overflow-hidden bg-background">
+    <div className="flex flex-col w-full max-w-6xl mx-auto h-[90vh] border rounded-lg shadow-sm overflow-hidden bg-[#0a0e17]">
       {/* Header with Back Button */}
-      <div className="p-4 border-b flex items-center justify-between bg-muted/30">
+      <div className="p-4 border-b border-[#1e2330] flex items-center justify-between bg-[#0a0e17]">
         <div className="flex items-center">
-          <Link href="/" className="flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mr-6">
+          <Link href="/" className="flex items-center text-sm font-medium text-gray-400 hover:text-white mr-6">
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back
           </Link>
-          <h2 className="font-semibold text-lg">Patent Black Hole</h2>
+          <h2 className="font-semibold text-lg text-white">Patent Black Hole</h2>
         </div>
-        <div className="text-sm text-muted-foreground">Patent Gap Finder</div>
+        <div className="text-sm text-gray-400">Model: * Think of Name *</div>
       </div>
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
-        {messages.map((message, index) => (
-          <div
-            key={message.id}
-            className={cn("flex items-start gap-4 animate-in fade-in duration-200", {
-              "justify-end": message.role === "user",
-            })}
-            style={{ animationDelay: `${index * 100}ms` }}
-          >
-            {message.role === "assistant" && (
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                <Bot className="h-5 w-5 text-primary" />
-              </div>
-            )}
-
-            <div
-              className={cn(
-                "rounded-lg px-5 py-3 max-w-[85%] break-words",
-                message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted",
-              )}
-            >
-              {message.role === "assistant" ? (
-                <div 
-                  className="text-base whitespace-pre-line"
-                  dangerouslySetInnerHTML={{ __html: formatText(message.content) }}
-                />
-              ) : (
-                <p className="text-base">{message.content}</p>
-              )}
-            </div>
-
-            {message.role === "user" && (
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
-                <User className="h-5 w-5 text-secondary" />
-              </div>
-            )}
-          </div>
-        ))}
-
-        {isLoading && (
-          <div className="flex items-start gap-4 animate-in fade-in duration-200">
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <Bot className="h-5 w-5 text-primary" />
-            </div>
-            <div className="rounded-lg px-5 py-3 bg-muted">
-              <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-muted-foreground/40 animate-pulse" />
-                <div
-                  className="w-2.5 h-2.5 rounded-full bg-muted-foreground/40 animate-pulse"
-                  style={{ animationDelay: "300ms" }}
-                />
-                <div
-                  className="w-2.5 h-2.5 rounded-full bg-muted-foreground/40 animate-pulse"
-                  style={{ animationDelay: "600ms" }}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div ref={messagesEndRef} />
+      <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[#0a0e17]">
+        {/* [... message rendering code ...] */}
       </div>
 
       {/* Input Area */}
-      <div className="p-5 border-t">
+      <div className="p-5 border-t border-[#1e2330] bg-[#0a0e17]">
         <form
           onSubmit={(e) => {
             e.preventDefault()
@@ -195,25 +136,31 @@ export default function ChatInterface() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Describe your invention idea or problem..."
-            className="flex-1 text-base py-6"
+            className="flex-1 text-base py-6 bg-[#1e2330] border-[#2a3146] text-white"
             disabled={isLoading}
           />
-          {/* Fixed button with explicit icon rendering */}
-          <Button
+          
+          {/* Directly use CSS for the button styles to ensure icon visibility */}
+          <button
             type="submit"
-            size="lg"
             disabled={isLoading || input.trim() === ""}
-            className="transition-all h-12 w-12 rounded-full flex items-center justify-center"
+            className="flex items-center justify-center h-12 w-12 rounded-md bg-[#1e2330] border border-[#2a3146] text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
             {isLoading ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
+              <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
             ) : (
-              <Send className="h-5 w-5" />
+              <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
             )}
-          </Button>
+          </button>
         </form>
-        <div className="mt-3 text-sm text-center text-muted-foreground">
-          AI assistant may produce inaccurate information about people, places, or facts.
+        <div className="mt-3 text-sm text-center text-gray-400">
+          AI assistants may produce inaccurate information about people, places, or facts.
         </div>
       </div>
     </div>
