@@ -190,7 +190,7 @@ export async function analyzeData(
         5. Innovation possibilities in this space
         6. Sources used
 
-        In your response, include the research papers as a footnote citation. Provide the sources for papers used.
+        In your response, include all patents and research papers as a footnote citation. Provide the sources for papers used.
 
         `;
 

@@ -1,6 +1,7 @@
 // app/layout.tsx
 import './globals.css'
 import type { Metadata } from 'next'
+import { Outfit } from "next/font/google"
 
 export const metadata: Metadata = {
   title: 'Patent Black Hole',

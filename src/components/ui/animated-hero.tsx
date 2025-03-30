@@ -76,5 +76,5 @@ function Hero() {
     </div>
   );
 }
-
 export { Hero };
+
