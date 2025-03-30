@@ -122,7 +122,7 @@ export async function POST(req: NextRequest) {
             }
         });
     } catch (error) {
-        console.error("Error in Gap Finder API: ", error);
+        console.error("Error in Main Processing API: ", error);
         return NextResponse.json({ 
             success: false, 
             message: "Failed to process your invention idea. Please try again."
