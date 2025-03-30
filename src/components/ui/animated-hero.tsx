@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { MoveRight, PhoneCall } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link"
+import Link from "next/link";
 
 function Hero() {
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = useMemo(
-    () => ["artificial intelligence", "finance", "healthcare", "machine learning", "cybersecurity"],
+    () => ["amazing", "new", "wonderful", "beautiful", "smart"],
     []
   );
 
@@ -23,14 +23,12 @@ function Hero() {
   }, [titleNumber, titles]);
 
   return (
-    <div className="w-full">
-      <div className="container mx-auto">
+    <div className="w-full relative min-h-screen">
+      <div className="container mx-auto relative z-10">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
-          <div>
-          </div>
           <div className="flex gap-4 flex-col">
             <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
-              <span className="text-spektr-cyan-50">Find your next startup in</span>
+              <span className="text-spektr-cyan-50">This is something</span>
               <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
                 &nbsp;
                 {titles.map((title, index) => (
@@ -66,7 +64,7 @@ function Hero() {
           </div>
           <div className="flex flex-row gap-3">
             <Link href="/chat">
-              <Button size="lg" className="gap-4">
+              <Button size="lg" className="gap-4 z-10">
                 Start inventing <MoveRight className="w-4 h-4" />
               </Button>
             </Link>

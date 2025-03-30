@@ -2,6 +2,8 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Outfit } from "next/font/google"
+import Script from 'next/script'
+import GlobalParticles from '@/components/ui/global-particles'
 
 export const metadata: Metadata = {
   title: 'Patent Black Hole',
@@ -15,7 +17,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body>{children}</body>
+      <head>
+        <Script 
+          src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"
+          strategy="beforeInteractive"
+        />
+      </head>
+      <body>
+        <div className="relative min-h-screen">
+          <GlobalParticles />
+          <div className="relative z-10">
+            {children}
+          </div>
+        </div>
+      </body>
     </html>
   )
 }
