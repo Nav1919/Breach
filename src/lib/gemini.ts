@@ -158,28 +158,41 @@ export async function generateInnovationIdeas(context: string): Promise<string[]
     }
 }
 
-export async function analyzeData(researchPapers: ResearchPaper[], industry: string): Promise<string> {
+export async function analyzeData(
+    market: string,
+    keywords: string[],
+    niche: string,
+    papers: string[],
+    patents: string[]
+): Promise<string> {
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
         const prompt = `
-        Analyze the following research papers in the ${industry} industry and identify innovation gaps:
-        
-        Research Papers:
-        ${JSON.stringify(researchPapers, null, 2)}
-        
+        Analyze the following information for the ${market} industry, specifically in the ${niche} niche:
+
+        KEYWORDS:
+        ${keywords.join(', ')}
+
+        RESEARCH PAPERS:
+        ${papers.join('\n')}
+
+        PATENTS:
+        ${patents.join('\n')}
+
         Please provide:
-        1. Key research trends
-        2. Identified gaps in current research
+        1. Key research trends and current state of technology
+        2. Identified gaps between research and patents
         3. Potential commercialization opportunities
-        4. Market needs not addressed by current research
+        4. Market needs not addressed by current solutions
+        5. Innovation possibilities in this space
         `;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
         return response.text();
     } catch (error) {
-        console.error("Error analyzing research gaps:", error);
-        throw new Error("Failed to analyze research gaps");
+        console.error("Error analyzing data:", error);
+        throw new Error("Failed to analyze data");
     }
 }
