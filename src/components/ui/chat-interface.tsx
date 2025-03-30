@@ -17,7 +17,7 @@ export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      content: "Hello! Tell me about your invention idea or the problem you're trying to solve, and I'll help you discover unique innovation opportunities!",
+      content: "Hello! Tell me about your startup idea or the problem you're trying to solve, and I'll help you discover unique ideas!",
       role: "assistant",
     },
   ])
@@ -113,9 +113,9 @@ export default function ChatInterface() {
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back
           </Link>
-          <h2 className="font-semibold text-lg text-white">Patent Black Hole</h2>
+          <h2 className="font-semibold text-lg text-white">Your Workspace</h2>
         </div>
-        <div className="text-sm text-gray-400">Model: * Think of Name *</div>
+        <div className="text-sm text-gray-400">Model: Incubate 1.0</div>
       </div>
 
       {/* Messages Container */}
@@ -142,7 +142,7 @@ export default function ChatInterface() {
             </div>
             <div className="flex-1 space-y-2">
               <div className="text-sm font-medium text-white">
-                {message.role === "assistant" ? "AI Assistant" : "You"}
+                {message.role === "assistant" ? "Breach" : "You"}
               </div>
               <div 
                 className="prose prose-sm text-gray-300"
