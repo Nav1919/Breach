@@ -1,14 +1,17 @@
-import axios from "axios";
-import { parseStringPromise } from "xml2js";
+import { parseStringPromise } from "xml2js"
 
 export async function fetchArxivPapers(query: string, maxResults: number = 5) {
   const baseUrl = "http://export.arxiv.org/api/query";
   const searchQuery = `search_query=all:${encodeURIComponent(query)}&start=0&max_results=${maxResults}`;
+  const url = `${baseUrl}?${searchQuery}`;
 
   try {
-    const response = await axios.get(`${baseUrl}?${searchQuery}`);
-    const data = await parseStringPromise(response.data);
-
+    const response = await fetch(url)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const xmlData = await response.text();
+    const data = await parseStringPromise(xmlData);
     return (data.feed.entry || []).map((entry: any) => ({
       title: entry.title[0],
       authors: entry.author.map((a: any) => a.name[0]),

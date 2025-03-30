@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "proven-center-455301-d7",
+  "private_key_id": "a52069e62ef2e1eb855b24973a7355377ab01753",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCn8EzVFmTBbKFG\neSuAGS5yT39sWoTl2N0eoDUd9Rp8DOESO9iFG+QYc4XZiOmtaAce/6kdCausBwhB\nDYh52/znykBW2w/JbskhShi6Z2EUZQ6fYS3RjBhGyAKcbMhIx5TcaBcITgx+frEX\nXgPTOmhVch+AUxotqNo2pkcijkmcL79QrxymEdLtfqM2YOhYMM7sKNGzvTddklej\nGK8xugbF13ScN1wgZAI0LZvQpxtie1fur/SNZiFz6i12dSu4AwMspk81Y1kymJzS\nCmoV8y3/qp0mb4wBo3H6gbGYvF2fJc643GuohLxLnh7e4MrelTsB6YIu4c8sUfI6\nLGWct6dzAgMBAAECggEAEq+OHPeM5mir2SeKS4qBvH5T8z5vIxPqJoo03sxy0fKs\n6FZ4VPcxffb8oaO2PHEiubRAoNZ+n3l41aQn10c+8Jt0ZTWioAsPngCcl8EA8D/+\nTIWHj5VC7j067SS9dDuguJVsWqQ0h66ZDbyMOGh7S2aTUrfsZcAv53zA1Xt3fUU0\nPT/aX0/oNDPi8nrhQYLRj9+XK0umvu9MGbxVIZd5UFFQ98ZcWWJwTmx7mmNWrznH\naHYFdn/6Bhc2RKrhLQ5i0TlZoB6MLwmPrtVQAL/Qtjkni2GT+u5PJl2LpsqNiQre\n0ha2Y32P+0kwmy6q/YMgOLNIpeIeGsUbw/I7UmWzIQKBgQDskOJyeFfaYiWHVXKv\nBNJ3Wz9RYVVZnXYoqZy4Juyj+2S7oiThI5ItZWs4M3+DeYbh0HeJcfZsOTJfm0oJ\nlotkcid3bc/WbYiGMYh0qnlgZQXZmTi3SR1kwrTrBCXVLS+7J6cN92uiTrgvBM22\nXzCkUaCfkoFuvtJLM+AyowUahwKBgQC1vCUlyNG4XWzMdCzdMPYJZMb9V4CmeLN1\nSurNaHJJYXTIqp0UEBnPuNMrV4oi1/JnJ3A9uw1j2VurvIPRqvYmZT/4uoKmGhnS\npWM+7oBaGc5Eufik0SiYE9NyB/E86L+8U+2XMJu3zIzE3iwj8Dj+wHOHJr3C+hg1\nYaVlgeBqtQKBgG2Of8DBqPYTRAwT74PMeOgb0wwORqe0+7bDLjg+lpMu5qza37eA\ncL8jW+9wMhqiWmwTznhR1eyy5HhQg45DMRT4pPxzV7CXk4WKRQa6uHGC952ZjyGa\n88jpPz4j8p1ySsujBoO6VRea20OzNs3B8dX3k6qy/8xZBS0cvjTVOJTbAoGAQJVe\nNjFJplU9JuNaVjjiFrCDruB7za0zSUmYa+rkQoOptu466DhYk+NA2DRB2OQZNuNj\nFez1czh5RWy3A7nXxAlTVJcjetfnuV4hCOpFHr/w96eHXzsdS/4vtGRyLI0iJlFF\nK+eQTx8YH5Y85YCnIJFP/QWdhj7Of5n15z7ie8kCgYB+5b4AfLv1zg+UDAkh3fH4\noaY3OiavaOyHWLF1MGBF9hSpPxH39NulS/ydaFt9o+ETOCEVlNX4kXSWSxt/ghL9\ndGrqWr9vjjGq7w0yYeG+xUAL9Y9rUy/A8Mh71qpKThczhEg3iJreu/ee4Mt5wrm8\npnZwsiNXiFUVd3HWzHmMfQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "patent-gap-finder@proven-center-455301-d7.iam.gserviceaccount.com",
+  "client_id": "100451404573620719151",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/patent-gap-finder%40proven-center-455301-d7.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
