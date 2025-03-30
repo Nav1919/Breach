@@ -5,13 +5,10 @@ import { Outfit } from "next/font/google"
 import Script from 'next/script'
 import GlobalParticles from '@/components/ui/global-particles'
 
-// Configure the Outfit font
 const outfit = Outfit({
   subsets: ['latin'],
   display: 'swap',
-  // Optionally add weight variants if needed
-  // weight: ['400', '500', '700'],
-  variable: '--font-outfit', // Optional: For use in CSS variables
+  variable: '--font-outfit',
 })
 
 export const metadata: Metadata = {

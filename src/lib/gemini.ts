@@ -69,14 +69,12 @@ function analyzeContext(context: string): PromptAnalysis {
         industryFocus.push(match[2].trim());
     }
 
-    // Extract constraints and requirements
     const constraintPatterns = /(constraint|requirement|focus|must|should|need):\s*([^,\n]+)/gi;
     const constraints = [];
     while ((match = constraintPatterns.exec(context)) !== null) {
         constraints.push(match[2].trim());
     }
 
-    // Analyze innovation level based on keywords
     const innovationKeywords = {
         incremental: ['improve', 'enhance', 'optimize', 'better'],
         radical: ['revolutionary', 'breakthrough', 'novel', 'innovative'],
@@ -84,7 +82,6 @@ function analyzeContext(context: string): PromptAnalysis {
     };
     const innovationLevel = determineInnovationLevel(tokens, innovationKeywords);
 
-    // Analyze market maturity
     const maturityKeywords = {
         emerging: ['new', 'emerging', 'upcoming', 'future'],
         growing: ['growing', 'expanding', 'developing', 'rising'],
@@ -351,57 +348,16 @@ export async function generateInnovationIdeas(
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-        // Analyze query type
-        const queryAnalysis = analyzeQueryType(context);
+        // Analyze context using NLP
+        const analysis = analyzeContext(context);
         
-        // Generate specialized prompt based on query type
-        const specializedPrompt = generateSpecializedPrompt(
-            queryAnalysis,
-            context,
-            papers,
-            patents,
-            previousIdeas
-        );
-
-        // Add papers and patents context
-        const papersContext = papers.map((p, i) => {
-            const analysis = analyzeResearchPaper(p);
-            return `Paper: ${p.title}
-Abstract: ${p.abstract}
-Authors: ${p.authors.join(', ')}
-Methodology: ${analysis.methodology.join(', ')}
-Key Findings: ${analysis.keyFindings.join(', ')}
-Limitations: ${analysis.limitations.join(', ')}
-Future Work: ${analysis.futureWork.join(', ')}
-Citations: ${analysis.citations.join(', ')}\n`;
-        }).join('\n');
-
-        const patentsContext = patents.map((p, i) => {
-            const analysis = analyzePatentClaims(p);
-            return `Patent: ${p.title}
-Abstract: ${p.abstract}
-Inventors: ${p.inventors.join(', ')}
-Technology Cluster: ${analysis.technologyCluster}
-Key Technologies: ${analysis.claimAnalysis.keyTechnologies.join(', ')}
-Potential Markets: ${analysis.marketImpact.potentialMarkets.join(', ')}
-Competitive Advantages: ${analysis.marketImpact.competitiveAdvantages.join(', ')}
-Barriers to Entry: ${analysis.marketImpact.barriersToEntry.join(', ')}\n`;
-        }).join('\n');
-
-        // Add previous ideas if available
-        const previousIdeasContext = previousIdeas ? `
-PREVIOUS IDEAS:
-${previousIdeas.join('\n\n')}
-` : '';
-
-        const fullPrompt = `${specializedPrompt}\n\n${previousIdeasContext}\n\nRELEVANT RESEARCH PAPERS WITH ANALYSIS:\n${papersContext}\n\nRELEVANT PATENTS WITH ANALYSIS:\n${patentsContext}`;
+        // Generate optimized prompt
+        const optimizedPrompt = generateOptimizedPrompt(context, analysis);
 
         // Generate content with optimized prompt
-        const result = await model.generateContent(fullPrompt);
+        const result = await model.generateContent(optimizedPrompt);
         const response = await result.response;
         const text = response.text();
-
-        // Split and clean the response
         return text.split("\n\n")
             .filter((idea: string) => idea.trim().length > 0)
             .map(idea => idea.trim());

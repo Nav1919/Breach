@@ -3,7 +3,7 @@ import { generateInnovationIdeas } from "@/lib/gemini";
 import { BigQuery } from '@google-cloud/bigquery';
 import { fetchArxivPapers } from '@/lib/arxiv'
 
-// Map of common industries to their CPC codes
+// map of industries to cpc codes
 const industryToCpcMap: Record<string, string[]> = {
     'healthcare': ['A61B', 'A61F', 'A61M'],
     'transportation': ['B60', 'B61', 'B62'],
@@ -39,14 +39,11 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: "No user message provided" }, { status: 400 });
         }
         
-        // For better results, let's also fetch relevant patent data
-        // First, extract keywords from the user's message
         const keywords = userMessage.toLowerCase()
             .split(/\s+/)
             .filter((word: string) => word.length > 4 && !['about', 'these', 'those', 'their', 'would', 'could'].includes(word))
             .slice(0, 5);
         
-        // Identify potential industries mentioned in the message
         const detectedIndustries: string[] = [];
         Object.keys(industryToCpcMap).forEach(industry => {
             if (userMessage.toLowerCase().includes(industry)) {
@@ -54,10 +51,8 @@ export async function POST(request: NextRequest) {
             }
         });
         
-        // Default to a generic industry if none detected
         const primaryIndustry = detectedIndustries.length > 0 ? detectedIndustries[0] : 'technology';
         
-        // Get CPC codes for the detected industry
         let industryCpcCodes: string[] = [];
         if (detectedIndustries.length > 0) {
             detectedIndustries.forEach(industry => {
@@ -68,7 +63,7 @@ export async function POST(request: NextRequest) {
         }
         
         if (industryCpcCodes.length === 0) {
-            industryCpcCodes = ['A', 'B', 'G']; // Default to broad categories
+            industryCpcCodes = ['A', 'B', 'G'];
         }
         const searchQuery = keywords.join(" ") + " " + primaryIndustry;
         const papers = await fetchArxivPapers(searchQuery, 50);
@@ -130,7 +125,6 @@ export async function POST(request: NextRequest) {
             `${p.title} - ${p.abstract?.substring(0, 200) || 'No abstract available'}...`
         );
         
-        // Generate innovation ideas with more context
         const innovationIdeas = await generateInnovationIdeas(
             userMessage,
             papers.map((p: { title: string; summary?: string; authors?: string[]; published?: string; pdf_url?: string }) => ({

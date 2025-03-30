@@ -10,7 +10,6 @@ export async function GET(request: NextRequest) {
     keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
   });
   
-  // Build domain filter
   let domainFilter = '';
   if (domains) {
     const domainArray = domains.split(',');
@@ -24,7 +23,6 @@ export async function GET(request: NextRequest) {
     }
   }
   
-  // Function to execute the query with retries
   const executeQuery = async (queryText: string, maxRetries = 2) => {
     let attempts = 0;
     let lastError;
@@ -32,28 +30,20 @@ export async function GET(request: NextRequest) {
     while (attempts < maxRetries) {
       try {
         const [rows] = await bigQuery.query(queryText);
-        return rows; // Success
+        return rows;
       } catch (error) {
         lastError = error;
         console.error(`Query attempt ${attempts + 1} failed:`, error);
         attempts++;
-        
-        // If it's a syntax error, try with a simplified query next time
         if ((error as Error).message && (error as Error).message.includes('Syntax error')) {
-          // For the next attempt, build a safer query
           return await executeFallbackQuery();
         }
-        
-        // Wait before retry
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
     }
-    
-    // All attempts failed
     throw lastError;
   };
   
-  // Fallback query function for when the main query fails
   const executeFallbackQuery = async () => {
     console.log("Executing fallback query without text search");
     const fallbackQuery = `
@@ -78,15 +68,12 @@ export async function GET(request: NextRequest) {
   };
   
   try {
-    // Sanitize query text to remove problematic characters
-    const sanitizedQuery = query.replace(/['"`\\]/g, " ").trim();
-    
-    // Build text filter
+    const cleanQuery = query.replace(/['"`\\]/g, " ").trim();
     let textFilter = '';
-    if (sanitizedQuery !== '') {
+    if (cleanQuery !== '') {
       textFilter = `AND (
-        (SELECT text FROM UNNEST(title_localized) WHERE language = 'en' LIMIT 1) LIKE '%${sanitizedQuery}%'
-        OR (SELECT text FROM UNNEST(abstract_localized) WHERE language = 'en' LIMIT 1) LIKE '%${sanitizedQuery}%'
+        (SELECT text FROM UNNEST(title_localized) WHERE language = 'en' LIMIT 1) LIKE '%${cleanQuery}%'
+        OR (SELECT text FROM UNNEST(abstract_localized) WHERE language = 'en' LIMIT 1) LIKE '%${cleanQuery}%'
       )`;
     }
     
